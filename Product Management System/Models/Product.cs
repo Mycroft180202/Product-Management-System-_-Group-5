@@ -21,7 +21,11 @@ public partial class Product
 
     public DateTime SellStartDate { get; set; }
 
+    public int? CreatedBy { get; set; }
+
     public DateTime? SellEndDate { get; set; }
+
+    public virtual User? CreatedByNavigation { get; set; }
 
     public virtual ProductModel? Model { get; set; }
 

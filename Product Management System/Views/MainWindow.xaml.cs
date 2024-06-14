@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ProductManagementSystem.Views.Login;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,8 @@ namespace Product_Management_System
         public MainWindow()
         {
             InitializeComponent();
+            var loginWindow = new LoginView();
+            loginWindow.ShowDialog();
         }
     }
 }
