@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Product_Management_System.Models;
 
-namespace Product_Management_System.Data;
+namespace Product_Management_System.Models;
 
 public partial class ProductManagementDbContext : DbContext
 {
@@ -32,6 +31,10 @@ public partial class ProductManagementDbContext : DbContext
 
     public virtual DbSet<ProductSubcategory> ProductSubcategories { get; set; }
 
+    public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var builder = new ConfigurationBuilder()
@@ -45,7 +48,7 @@ public partial class ProductManagementDbContext : DbContext
     {
         modelBuilder.Entity<Location>(entity =>
         {
-            entity.HasKey(e => e.LocationId).HasName("PK__Location__E7FEA47773AAF222");
+            entity.HasKey(e => e.LocationId).HasName("PK__Location__E7FEA4773A03D2A5");
 
             entity.ToTable("Location");
 
@@ -68,12 +71,17 @@ public partial class ProductManagementDbContext : DbContext
                 .HasColumnName("ProductID");
             entity.Property(e => e.Color).HasMaxLength(15);
             entity.Property(e => e.Cost).HasColumnType("money");
+            entity.Property(e => e.CreatedBy).HasColumnName("Created_by");
             entity.Property(e => e.ModelId).HasColumnName("ModelID");
             entity.Property(e => e.Name).HasMaxLength(200);
             entity.Property(e => e.Price).HasColumnType("money");
             entity.Property(e => e.SellEndDate).HasColumnType("datetime");
             entity.Property(e => e.SellStartDate).HasColumnType("datetime");
             entity.Property(e => e.SubcategoryId).HasColumnName("SubcategoryID");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Products)
+                .HasForeignKey(d => d.CreatedBy)
+                .HasConstraintName("FK_Product_User");
 
             entity.HasOne(d => d.Model).WithMany(p => p.Products)
                 .HasForeignKey(d => d.ModelId)
@@ -86,7 +94,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductCostHistory>(entity =>
         {
-            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductC__D0ED59229D9853B7");
+            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductC__D0ED5922B2A23134");
 
             entity.ToTable("ProductCostHistory");
 
@@ -103,7 +111,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductInventory>(entity =>
         {
-            entity.HasKey(e => new { e.ProductId, e.LocationId }).HasName("PK__ProductI__DA732CAAEF93DFA5");
+            entity.HasKey(e => new { e.ProductId, e.LocationId }).HasName("PK__ProductI__DA732CAAC3FD383F");
 
             entity.ToTable("ProductInventory");
 
@@ -114,7 +122,7 @@ public partial class ProductManagementDbContext : DbContext
             entity.HasOne(d => d.Location).WithMany(p => p.ProductInventories)
                 .HasForeignKey(d => d.LocationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ProductIn__Locat__2F10007B");
+                .HasConstraintName("FK__ProductIn__Locat__5CD6CB2B");
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductInventories)
                 .HasForeignKey(d => d.ProductId)
@@ -124,7 +132,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductModel>(entity =>
         {
-            entity.HasKey(e => e.ModelId).HasName("PK__ProductM__E8D7A1CCE8604A7F");
+            entity.HasKey(e => e.ModelId).HasName("PK__ProductM__E8D7A1CC5F64B926");
 
             entity.ToTable("ProductModel");
 
@@ -136,7 +144,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductPriceHistory>(entity =>
         {
-            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductP__D0ED59220A66D7C7");
+            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductP__D0ED5922A55F6A1B");
 
             entity.ToTable("ProductPriceHistory");
 
@@ -153,7 +161,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductSubcategory>(entity =>
         {
-            entity.HasKey(e => e.SubcategoryId).HasName("PK__ProductS__9C4E707DC8D2AAE6");
+            entity.HasKey(e => e.SubcategoryId).HasName("PK__ProductS__9C4E707DDB0C5DE3");
 
             entity.ToTable("ProductSubcategory");
 
@@ -162,6 +170,40 @@ public partial class ProductManagementDbContext : DbContext
                 .HasColumnName("SubcategoryID");
             entity.Property(e => e.Category).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.ToTable("Role");
+
+            entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("User");
+
+            entity.Property(e => e.Email)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Fullname)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.IsActive).HasColumnName("Is_active");
+            entity.Property(e => e.Password)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.RoleId).HasColumnName("Role_id");
+            entity.Property(e => e.Username)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Users)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_User_Role");
         });
 
         OnModelCreatingPartial(modelBuilder);
