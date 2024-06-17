@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Product_Management_System.Models;
 
 namespace Product_Management_System.Data;
@@ -35,19 +37,21 @@ public partial class ProductManagementDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-MYCROFT;Initial Catalog=ProductManagementDB;User ID=sa;Password=123;TrustServerCertificate=True");
-
+    {
+        string connectionString =
+            System.Configuration.ConfigurationManager.ConnectionStrings["DB"].ToString();
+        optionsBuilder.UseSqlServer(connectionString);
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Location>(entity =>
         {
             entity.HasKey(e => e.LocationId).HasName("PK__Location__E7FEA47773AAF222");
 
-            entity.ToTable("Location");
+            entity.ToTable("Location"); 
 
             entity.Property(e => e.LocationId)
-                .ValueGeneratedNever()
+                .ValueGeneratedNever()          
                 .HasColumnName("LocationID");
             entity.Property(e => e.Availability).HasColumnType("decimal(8, 2)");
             entity.Property(e => e.CostRate).HasColumnType("smallmoney");
