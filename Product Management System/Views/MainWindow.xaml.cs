@@ -1,4 +1,4 @@
-﻿using ProductManagementSystem.Views.Login;
+﻿using ProductManagementSystem.Views.Authentication;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,9 +19,9 @@ namespace Product_Management_System
     {
         public MainWindow()
         {
-            InitializeComponent();
-            var loginWindow = new LoginView();
-            loginWindow.ShowDialog();
+            //InitializeComponent();
+            //var loginWindow = new LoginView();
+            //loginWindow.ShowDialog();
         }
     }
 }

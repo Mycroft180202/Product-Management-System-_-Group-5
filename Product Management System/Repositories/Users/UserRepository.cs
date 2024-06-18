@@ -16,7 +16,6 @@ namespace ProductManagementSystem.Repositories.Users
 
         public UserRepository()
         {
-            // Sử dụng DI hoặc Factory pattern để quản lý đối tượng thực tế
             _context = new ProductManagementDbContext();
         }
 

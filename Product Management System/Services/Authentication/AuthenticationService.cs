@@ -14,18 +14,22 @@ namespace ProductManagementSystem.Services.Authentication
 
         public AuthenticationService()
         {
-            // Sử dụng DI hoặc Factory pattern để quản lý đối tượng thực tế
             _userRepository = new UserRepository();
         }
 
         public bool Authenticate(string username, string password)
         {
             var user = _userRepository.GetUserByUsername(username);
-            if (user != null && user.Password == password) // Lưu ý: Không nên so sánh mật khẩu theo cách này trong thực tế.
+            if (user != null && user.Password == password) 
             {
                 return true;
             }
             return false;
+        }
+
+        bool IAuthenticationService.Authenticate(string username, string password)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,20 +1,22 @@
-﻿using ProductManagementSystem.ViewModels.Login;
+﻿using ProductManagementSystem.ViewModels.Authentication;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ProductManagementSystem.Views.Login
+namespace ProductManagementSystem.Views.Authentication
 {
     public partial class LoginView : Window
     {
         public LoginView()
         {
             InitializeComponent();
-            DataContext = new LoginViewModel();
+            var viewModel = new LoginViewModel();
+            viewModel.CloseAction = new Action(this.Close);
+            DataContext = viewModel;
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (DataContext is LoginViewModel viewModel)
+            if (DataContext is LoginViewModel viewModel)    
             {
                 viewModel.Password = ((PasswordBox)sender).Password;
             }

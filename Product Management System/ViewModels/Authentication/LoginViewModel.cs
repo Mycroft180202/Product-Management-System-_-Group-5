@@ -3,9 +3,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using Product_Management_System;
 using ProductManagementSystem.Services.Authentication;
 
-namespace ProductManagementSystem.ViewModels.Login
+namespace ProductManagementSystem.ViewModels.Authentication
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
@@ -34,12 +35,13 @@ namespace ProductManagementSystem.ViewModels.Login
         }
 
         public ICommand LoginCommand { get; }
+        public Action CloseAction { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public LoginViewModel()
         {
-            _authenticationService = new AuthenticationService(); // Sử dụng DI hoặc Factory pattern để quản lý đối tượng thực tế
+            _authenticationService = new AuthenticationService(); 
             LoginCommand = new RelayCommand(ExecuteLogin, CanExecuteLogin);
         }
 
@@ -58,10 +60,13 @@ namespace ProductManagementSystem.ViewModels.Login
             var isAuthenticated = _authenticationService.Authenticate(Username, Password);
             if (isAuthenticated)
             {
-                // Chuyển đến màn hình chính của ứng dụng
                 MessageBox.Show("Login successful!");
-                // Logic chuyển đổi view hoặc điều hướng
-            }
+
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+
+                CloseAction?.Invoke();
+            }   
             else
             {
                 MessageBox.Show("Invalid username or password.");
