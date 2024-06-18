@@ -26,10 +26,5 @@ namespace ProductManagementSystem.Services.Authentication
             }
             return false;
         }
-
-        bool IAuthenticationService.Authenticate(string username, string password)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
