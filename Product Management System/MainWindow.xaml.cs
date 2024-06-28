@@ -22,15 +22,11 @@ namespace Product_Management_System
         {
             InitializeComponent();
             dbcontext = new ProductManagementDbContext();
-            LoadProductPriceHistory();
         }
 
-        private void LoadProductPriceHistory()
+        private void btnPriceHistory_Click(object sender, RoutedEventArgs e)
         {
-            dgData.ItemsSource = null;
-            dbcontext = new ProductManagementDbContext();
-            var price_history = dbcontext.ProductPriceHistories.ToList();
-            dgData.ItemsSource = price_history;
+            frProductPriceHistory.Content = new ProductPriceHistoryPage();
         }
     }
 }
