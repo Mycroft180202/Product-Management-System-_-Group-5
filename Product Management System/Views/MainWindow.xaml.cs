@@ -20,8 +20,7 @@ namespace Product_Management_System
         public MainWindow()
         {
             //InitializeComponent();
-            //var loginWindow = new LoginView();
-            //loginWindow.ShowDialog();
+           
         }
     }
 }
