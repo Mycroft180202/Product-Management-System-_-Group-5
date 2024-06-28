@@ -65,6 +65,7 @@ namespace Product_Management_System
         private void btnClearFilter_Click(object sender, RoutedEventArgs e)
         {
             ClearInputField();
+            LoadProductPriceHistory();
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)  //Tạm thời không biết có hoạt động hay không
@@ -152,7 +153,6 @@ namespace Product_Management_System
             }
 
             dgData.ItemsSource = filteredHistories.ToList();
-            ClearInputField() ;
         }
 
     }
