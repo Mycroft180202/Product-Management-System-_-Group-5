@@ -1,5 +1,7 @@
-﻿using Product_Management_System.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Product_Management_System.Data;
 using Product_Management_System.Models;
+using Product_Management_System.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,19 +24,18 @@ namespace Product_Management_System
     /// </summary>
     public partial class ProductPriceHistoryPage : Page
     {
-        private ProductManagementDbContext dbcontext;
+        private readonly IPriceHistoryService iPriceHistoryService;
         public ProductPriceHistoryPage()
         {
             InitializeComponent();
-            dbcontext = new ProductManagementDbContext();
+            iPriceHistoryService = new PriceHistoryService();
             LoadProductPriceHistory();
         }
 
         private void LoadProductPriceHistory()
         {
             dgData.ItemsSource = null;
-            dbcontext = new ProductManagementDbContext();
-            var price_history = dbcontext.ProductPriceHistories.ToList();
+            var price_history = iPriceHistoryService.GetAllPriceHistories();
             dgData.ItemsSource = price_history;
         }
 
@@ -70,57 +71,80 @@ namespace Product_Management_System
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)  //Tạm thời không biết có hoạt động hay không
         {                                                               //vì bị vướng foreign key productId với bảng Product
-            var newPriceHistory = new ProductPriceHistory
+            try
             {
-                StartDate = dpStartDate.SelectedDate.HasValue
-                    ? dpStartDate.SelectedDate.Value : DateTime.Now,
-                EndDate = dpEndDate.SelectedDate,
-                Price = decimal.Parse(txtPrice.Text)
-            };
-            dbcontext.ProductPriceHistories.Add(newPriceHistory);
-            dbcontext.SaveChanges();                                    //vướng foreign key 
-            LoadProductPriceHistory();
-            ClearInputField();
+                var newPriceHistory = new ProductPriceHistory
+                {
+                    StartDate = dpStartDate.SelectedDate.HasValue
+                                    ? dpStartDate.SelectedDate.Value : DateTime.Now,
+                    EndDate = dpEndDate.SelectedDate,
+                    Price = decimal.Parse(txtPrice.Text)
+                };
+                iPriceHistoryService.InsertPriceHistory(newPriceHistory);
+                LoadProductPriceHistory();
+                ClearInputField();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                LoadProductPriceHistory();
+            }
+            
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (dgData.SelectedItem is ProductPriceHistory selectedProduct)
-            //if (int.TryParse(txtProductID.Text, out int productId))
+            try
             {
-                var product = dbcontext.ProductPriceHistories.FirstOrDefault(p => p.ProductId == selectedProduct.ProductId);
-                if (product != null)
+                if (dgData.SelectedItem is ProductPriceHistory selectedProduct)
+                //if (int.TryParse(txtProductID.Text, out int productId))
                 {
-                    product.StartDate = dpStartDate.SelectedDate.HasValue
+                    selectedProduct.StartDate = dpStartDate.SelectedDate.HasValue
                         ? dpStartDate.SelectedDate.Value : DateTime.Now;
-                    product.EndDate = dpEndDate.SelectedDate;
-                    product.Price = decimal.Parse(txtPrice.Text);
+                    selectedProduct.EndDate = dpEndDate.SelectedDate;
+                    selectedProduct.Price = decimal.Parse(txtPrice.Text);
 
-                    dbcontext.SaveChanges();
+                    iPriceHistoryService.UpdatePriceHistory(selectedProduct);
                     LoadProductPriceHistory();
                     ClearInputField();
-                }
+                }   
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Please select a product price history to update.");
+            }
+            finally
+            {
+                LoadProductPriceHistory();
+            }
+            
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (dgData.SelectedItem is ProductPriceHistory selectedProduct)
+            try
             {
-                var productToRemove = dbcontext.ProductPriceHistories
-                    .SingleOrDefault(pro => pro.ProductId == selectedProduct.ProductId);
-
-                if (productToRemove != null)
+                if (dgData.SelectedItem is ProductPriceHistory selectedProduct)
                 {
-                    dbcontext.ProductPriceHistories.Remove(productToRemove);
-                    dbcontext.SaveChanges();
+                    iPriceHistoryService.DeletePriceHistory(selectedProduct);
                     LoadProductPriceHistory();
                     ClearInputField();
                 }
+                else
+                {
+                    MessageBox.Show("No product selected to remove!");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("No product selected to remove!");
+                MessageBox.Show("Please select a product price history to delete");
+            }
+            finally
+            {
+                LoadProductPriceHistory();
             }
         }
 
@@ -135,7 +159,7 @@ namespace Product_Management_System
                 price = parsedPrice;
             }
 
-            var filteredHistories = dbcontext.ProductPriceHistories.AsQueryable();
+            var filteredHistories = iPriceHistoryService.GetAllPriceHistories().AsQueryable();
 
             if (startDate != null)
             {

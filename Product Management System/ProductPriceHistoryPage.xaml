@@ -8,7 +8,7 @@
       d:DesignHeight="500" d:DesignWidth="800"
       Title="ProductPriceHistoryWindow" Background="White">
 
-    <Grid>
+    <Grid Background="LightPink">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="30"/>
@@ -28,7 +28,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Name="lblProductPriceHistoryManagement" Content="Product Price History Management" Grid.Row="0" Grid.Column="2" 
-               Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Left" Width="550"/>
+               Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Left" Width="550" FontWeight="Bold"/>
         
         <Label Name="lblProductID" Content="Product ID" Grid.Row="1" Grid.Column="0"/>
         <TextBox Name="txtProductID" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" Margin="4" IsEnabled="False"/>
