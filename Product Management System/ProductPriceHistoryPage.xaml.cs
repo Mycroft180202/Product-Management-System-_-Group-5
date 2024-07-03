@@ -114,7 +114,7 @@ namespace Product_Management_System
             }
             catch(Exception ex)
             {
-                MessageBox.Show("Please select a product price history to update.");
+                MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -140,7 +140,7 @@ namespace Product_Management_System
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Please select a product price history to delete");
+                MessageBox.Show(ex.Message);
             }
             finally
             {
