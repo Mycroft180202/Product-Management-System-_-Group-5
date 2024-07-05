@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Product_Management_System"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Button Name="btnPriceHistory" Content="Product Price History" VerticalAlignment="Top" Height="40" Width="150" 
+                Click="btnPriceHistory_Click" Grid.Row="0" HorizontalAlignment="Left"/>
+        <Frame Name="frProductPriceHistory" NavigationUIVisibility="Hidden" Grid.Row="1"/>
     </Grid>
 </Window>

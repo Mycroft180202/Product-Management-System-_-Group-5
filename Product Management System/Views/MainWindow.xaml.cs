@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Product_Management_System.Data;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,9 +17,16 @@ namespace Product_Management_System
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ProductManagementDbContext dbcontext;
         public MainWindow()
         {
             InitializeComponent();
+            dbcontext = new ProductManagementDbContext();
+        }
+
+        private void btnPriceHistory_Click(object sender, RoutedEventArgs e)
+        {
+            frProductPriceHistory.Content = new ProductPriceHistoryPage();
         }
     }
 }
