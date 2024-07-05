@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Product_Management_System.Views
+namespace Product_Management_System.Views.ADMIN
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for AdminDashboardWindow.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class AdminDashboardWindow : Window
     {
-        public LoginPage()
+        public AdminDashboardWindow()
         {
             InitializeComponent();
         }
