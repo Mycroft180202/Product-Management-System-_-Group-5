@@ -2,6 +2,7 @@
 using Product_Management_System.Data;
 using Product_Management_System.Models;
 using Product_Management_System.Services;
+using Product_Management_System.Services.PriceHistoryServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;

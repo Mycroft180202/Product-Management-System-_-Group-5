@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Product_Management_System.Repositories
+namespace Product_Management_System.Repositories.PriceHistory
 {
     public interface IPriceHistoryRepository
     {
