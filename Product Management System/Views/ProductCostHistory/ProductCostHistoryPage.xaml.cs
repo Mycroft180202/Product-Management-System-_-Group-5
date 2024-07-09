@@ -78,7 +78,7 @@ namespace Product_Management_System.Views.ProductCostHistory
                     EndDate = dpEndDate.SelectedDate,
                     Cost = decimal.Parse(txtCost.Text)
                 };
-                iCostHistoryService.InsertCostHistory(newCostHistory);
+                iProductCostHistoryService.InsertProductCostHistory(newCostHistory);
                 LoadProductCostHistory();
                 ClearInputField();
             }
@@ -105,7 +105,7 @@ namespace Product_Management_System.Views.ProductCostHistory
                     selectedProduct.EndDate = dpEndDate.SelectedDate;
                     selectedProduct.Cost = decimal.Parse(txtCost.Text);
 
-                    iCostHistoryService.UpdateCostHistory(selectedProduct);
+                    iProductCostHistoryService.UpdateProductCostHistory(selectedProduct);
                     LoadProductCostHistory();
                     ClearInputField();
                 }
@@ -127,7 +127,7 @@ namespace Product_Management_System.Views.ProductCostHistory
             {
                 if (dgData.SelectedItem is ProductCostHistory selectedProduct)
                 {
-                    iCostHistoryService.DeleteCostHistory(selectedProduct);
+                    iProductCostHistoryService.DeleteProductCostHistory(selectedProduct);
                     LoadProductCostHistory();
                     ClearInputField();
                 }
@@ -157,7 +157,7 @@ namespace Product_Management_System.Views.ProductCostHistory
                 Cost = parsedCost;
             }
 
-            var filteredHistories = iCostHistoryService.GetAllCostHistories().AsQueryable();
+            var filteredHistories = iProductCostHistoryService.GetProductCostHistories().AsQueryable();
 
             if (startDate != null)
             {
