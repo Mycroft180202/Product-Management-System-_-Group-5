@@ -25,6 +25,11 @@ namespace Product_Management_System
             dbcontext = new ProductManagementDbContext();
         }
 
+        private void btnPriceHistory_Click(object sender, RoutedEventArgs e)
+        {
+            // frProductPriceHistory.Content = new ProductPriceHistoryPage();
+        }
+
         private void btnCostHistory_Click(object sender, RoutedEventArgs e)
         {
             frProductCostHistory.Content = new ProductCostHistoryPage();
