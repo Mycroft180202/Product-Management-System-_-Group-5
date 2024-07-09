@@ -1,4 +1,5 @@
-﻿using System.Text;
+using Product_Management_System.Data;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,13 +17,10 @@ namespace Product_Management_System
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ProductManagementDbContext dbcontext;
         public MainWindow()
         {
             InitializeComponent();
-<<<<<<< Updated upstream
-        }
-    }
-=======
             dbcontext = new ProductManagementDbContext();
         }
 
@@ -36,5 +34,4 @@ namespace Product_Management_System
 			frMainContent.Navigate(new ProductPriceHistoryPage());
 		}
 	}
->>>>>>> Stashed changes
 }

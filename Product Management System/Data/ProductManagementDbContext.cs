@@ -32,12 +32,16 @@ public partial class ProductManagementDbContext : DbContext
 
     public virtual DbSet<ProductSubcategory> ProductSubcategories { get; set; }
 
+    public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var builder = new ConfigurationBuilder()
-                           .SetBasePath(Directory.GetCurrentDirectory())
-                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-        IConfigurationRoot configuration = builder.Build();
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        IConfiguration configuration = builder.Build();
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("DB"));
     }
 
@@ -45,7 +49,7 @@ public partial class ProductManagementDbContext : DbContext
     {
         modelBuilder.Entity<Location>(entity =>
         {
-            entity.HasKey(e => e.LocationId).HasName("PK__Location__E7FEA47773AAF222");
+            entity.HasKey(e => e.LocationId).HasName("PK__Location__E7FEA47765AE4F24");
 
             entity.ToTable("Location");
 
@@ -59,7 +63,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6ED90F23CBA");
+            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6EDD6406E48");
 
             entity.ToTable("Product");
 
@@ -86,7 +90,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductCostHistory>(entity =>
         {
-            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductC__D0ED59229D9853B7");
+            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductC__D0ED592241FE2798");
 
             entity.ToTable("ProductCostHistory");
 
@@ -103,7 +107,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductInventory>(entity =>
         {
-            entity.HasKey(e => new { e.ProductId, e.LocationId }).HasName("PK__ProductI__DA732CAAEF93DFA5");
+            entity.HasKey(e => new { e.ProductId, e.LocationId }).HasName("PK__ProductI__DA732CAAF88FC857");
 
             entity.ToTable("ProductInventory");
 
@@ -124,7 +128,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductModel>(entity =>
         {
-            entity.HasKey(e => e.ModelId).HasName("PK__ProductM__E8D7A1CCE8604A7F");
+            entity.HasKey(e => e.ModelId).HasName("PK__ProductM__E8D7A1CC1A6A50F4");
 
             entity.ToTable("ProductModel");
 
@@ -136,7 +140,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductPriceHistory>(entity =>
         {
-            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductP__D0ED59220A66D7C7");
+            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductP__D0ED5922479C2C6C");
 
             entity.ToTable("ProductPriceHistory");
 
@@ -153,7 +157,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductSubcategory>(entity =>
         {
-            entity.HasKey(e => e.SubcategoryId).HasName("PK__ProductS__9C4E707DC8D2AAE6");
+            entity.HasKey(e => e.SubcategoryId).HasName("PK__ProductS__9C4E707DC8C4A443");
 
             entity.ToTable("ProductSubcategory");
 
@@ -162,6 +166,40 @@ public partial class ProductManagementDbContext : DbContext
                 .HasColumnName("SubcategoryID");
             entity.Property(e => e.Category).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.ToTable("Role");
+
+            entity.Property(e => e.Name)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("User");
+
+            entity.Property(e => e.Email)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Fullname)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.IsActive).HasColumnName("Is_active");
+            entity.Property(e => e.Password)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.RoleId).HasColumnName("Role_id");
+            entity.Property(e => e.Username)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.Role).WithMany(p => p.Users)
+                .HasForeignKey(d => d.RoleId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_User_Role");
         });
 
         OnModelCreatingPartial(modelBuilder);
