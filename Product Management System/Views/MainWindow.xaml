@@ -7,6 +7,23 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+<<<<<<< Updated upstream
 
+=======
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Button Name="btnPriceHistory" Content="Product Price History" VerticalAlignment="Top" Height="40" Width="150" 
+                    Click="btnPriceHistory_Click" Margin="5"/>
+            <Button Name="btnProductInventory" Content="Product Inventory" VerticalAlignment="Top" Height="40" Width="150" 
+                    Click="btnProductInventory_Click" Margin="5"/>
+        </StackPanel>
+
+        <Frame Name="frMainContent" NavigationUIVisibility="Hidden" Grid.Row="1"/>
+>>>>>>> Stashed changes
     </Grid>
 </Window>

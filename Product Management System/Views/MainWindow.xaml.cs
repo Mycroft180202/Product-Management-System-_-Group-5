@@ -19,6 +19,22 @@ namespace Product_Management_System
         public MainWindow()
         {
             InitializeComponent();
+<<<<<<< Updated upstream
         }
     }
+=======
+            dbcontext = new ProductManagementDbContext();
+        }
+
+		private void btnProductInventory_Click(object sender, RoutedEventArgs e)
+		{
+			frMainContent.Navigate(new ProductInventoryPage());
+		}
+
+		private void btnPriceHistory_Click(object sender, RoutedEventArgs e)
+		{
+			frMainContent.Navigate(new ProductPriceHistoryPage());
+		}
+	}
+>>>>>>> Stashed changes
 }
