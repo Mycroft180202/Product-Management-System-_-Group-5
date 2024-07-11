@@ -1,4 +1,4 @@
-﻿using Product_Management_System.Data;
+using Product_Management_System.Data;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,9 +24,14 @@ namespace Product_Management_System
             dbcontext = new ProductManagementDbContext();
         }
 
-        private void btnPriceHistory_Click(object sender, RoutedEventArgs e)
-        {
-            frProductPriceHistory.Content = new ProductPriceHistoryPage();
-        }
-    }
+		private void btnProductInventory_Click(object sender, RoutedEventArgs e)
+		{
+			frMainContent.Navigate(new ProductInventoryPage());
+		}
+
+		private void btnPriceHistory_Click(object sender, RoutedEventArgs e)
+		{
+			frMainContent.Navigate(new ProductPriceHistoryPage());
+		}
+	}
 }
