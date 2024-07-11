@@ -4,7 +4,8 @@ using Product_Management_System.Repositories;
 using Product_Management_System.Services;
 using Product_Management_System.Data;
 using Product_Management_System.Views.Authentication;
-using Product_Management_System.Views.ADMIN;
+using Product_Management_System.Views.Admin;
+using Product_Management_System.Repositories.Authentication;
 
 namespace Product_Management_System
 {

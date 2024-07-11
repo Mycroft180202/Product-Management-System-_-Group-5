@@ -3,7 +3,8 @@ using Product_Management_System.Models;
 using Product_Management_System.Services;
 using Product_Management_System.Repositories;
 using Product_Management_System.Data;
-using Product_Management_System.Views.ADMIN;
+using Product_Management_System.Repositories.Authentication;
+using Product_Management_System.Views.Admin;
 
 namespace Product_Management_System.Views.Authentication
 {
