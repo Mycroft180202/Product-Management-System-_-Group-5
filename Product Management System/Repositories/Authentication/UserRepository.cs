@@ -35,21 +35,21 @@ namespace Product_Management_System.Repositories.Authentication
             }
         }
 
-        internal object GetUserByUsername(string username)
+        public User GetUserByUsername(string username)
         {
             return _context.Users.FirstOrDefault(u => u.Username == username);
         }
 
-        internal void AddUser(User newUser)
+        public void AddUser(User newUser)
         {
             _context.Users.Add(newUser);
             _context.SaveChanges();
         }
 
-        User? IUserRepository.GetUserByUsernameAndPassword(string username, string password)
+        public User GetUserByUsernameAndPassword(string username, string password)
         {
             return _context.Users
-               .FirstOrDefault(u => u.Username == username && u.Password == password && u.IsActive);
+                .FirstOrDefault(u => u.Username == username && u.Password == password && u.IsActive);
         }
     }
 }

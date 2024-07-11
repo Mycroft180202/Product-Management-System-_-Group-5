@@ -12,14 +12,23 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
+        <DockPanel LastChildFill="True">
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <Button Name="btnPriceHistory" Content="Product Price History" VerticalAlignment="Top" Height="40" Width="150" 
+             Click="btnPriceHistory_Click" Margin="5"/>
+                <Button Name="btnProductInventory" Content="Product Inventory" VerticalAlignment="Top" Height="40" Width="150" 
+             Click="btnProductInventory_Click" Margin="5"/>
+            </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button Name="btnPriceHistory" Content="Product Price History" VerticalAlignment="Top" Height="40" Width="150" 
-                    Click="btnPriceHistory_Click" Margin="5"/>
-            <Button Name="btnProductInventory" Content="Product Inventory" VerticalAlignment="Top" Height="40" Width="150" 
-                    Click="btnProductInventory_Click" Margin="5"/>
-        </StackPanel>
-
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right">
+                <TextBlock Text="Hello, " FontSize="14" FontWeight="Medium" VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtUserFullName" Text="" FontSize="14" FontWeight="Medium" 
+               Foreground="Blue" VerticalAlignment="Center" Cursor="Hand" 
+               MouseLeftButtonDown="txtUserFullName_MouseLeftButtonDown"/>
+            </StackPanel>
+        </DockPanel>
+        
         <Frame Name="frMainContent" NavigationUIVisibility="Hidden" Grid.Row="1"/>
     </Grid>
 </Window>

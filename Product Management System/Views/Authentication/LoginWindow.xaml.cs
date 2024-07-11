@@ -5,19 +5,33 @@ using Product_Management_System.Repositories;
 using Product_Management_System.Data;
 using Product_Management_System.Repositories.Authentication;
 using Product_Management_System.Views.Admin;
+using Microsoft.Extensions.DependencyInjection;
+using static Product_Management_System.App;
 
 namespace Product_Management_System.Views.Authentication
 {
     public partial class LoginWindow : Window
     {
         private readonly IAuthenticationService _authenticationService;
+        private readonly CurrentUserService _currentUserService;
 
-        public LoginWindow()
+        public LoginWindow(IAuthenticationService authService, CurrentUserService currentUserService)
         {
             InitializeComponent();
             var context = new ProductManagementDbContext(); 
             var userRepository = new UserRepository(context);
             _authenticationService = new AuthenticationService(userRepository);
+            _authenticationService = authService;
+            _currentUserService = currentUserService;
+        }
+
+        public LoginWindow()
+        {
+            InitializeComponent();
+            var context = new ProductManagementDbContext();
+            var userRepository = new UserRepository(context);
+            _authenticationService = new AuthenticationService(userRepository);
+            _currentUserService = new CurrentUserService();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -38,7 +52,7 @@ namespace Product_Management_System.Views.Authentication
                 }
                 else if (user.RoleId == 2) // Staff
                 {
-                    MainWindow mainWindow = new MainWindow();
+                   MainWindow mainWindow = new MainWindow(user);
                     mainWindow.Show();
                 }
 
