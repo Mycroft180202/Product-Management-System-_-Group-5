@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Product_Management_System.Models;
 
-namespace Product_Management_System.Models;
+namespace Product_Management_System.Data;
 
 public partial class ProductManagementDbContext : DbContext
 {
@@ -38,9 +39,9 @@ public partial class ProductManagementDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var builder = new ConfigurationBuilder()
-                           .SetBasePath(Directory.GetCurrentDirectory())
-                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-        IConfigurationRoot configuration = builder.Build();
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        IConfiguration configuration = builder.Build();
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("DB"));
     }
 
@@ -48,7 +49,7 @@ public partial class ProductManagementDbContext : DbContext
     {
         modelBuilder.Entity<Location>(entity =>
         {
-            entity.HasKey(e => e.LocationId).HasName("PK__Location__E7FEA4773A03D2A5");
+            entity.HasKey(e => e.LocationId).HasName("PK__Location__E7FEA47765AE4F24");
 
             entity.ToTable("Location");
 
@@ -62,7 +63,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6ED90F23CBA");
+            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6EDD6406E48");
 
             entity.ToTable("Product");
 
@@ -71,17 +72,12 @@ public partial class ProductManagementDbContext : DbContext
                 .HasColumnName("ProductID");
             entity.Property(e => e.Color).HasMaxLength(15);
             entity.Property(e => e.Cost).HasColumnType("money");
-            entity.Property(e => e.CreatedBy).HasColumnName("Created_by");
             entity.Property(e => e.ModelId).HasColumnName("ModelID");
             entity.Property(e => e.Name).HasMaxLength(200);
             entity.Property(e => e.Price).HasColumnType("money");
             entity.Property(e => e.SellEndDate).HasColumnType("datetime");
             entity.Property(e => e.SellStartDate).HasColumnType("datetime");
             entity.Property(e => e.SubcategoryId).HasColumnName("SubcategoryID");
-
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.Products)
-                .HasForeignKey(d => d.CreatedBy)
-                .HasConstraintName("FK_Product_User");
 
             entity.HasOne(d => d.Model).WithMany(p => p.Products)
                 .HasForeignKey(d => d.ModelId)
@@ -94,7 +90,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductCostHistory>(entity =>
         {
-            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductC__D0ED5922B2A23134");
+            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductC__D0ED592241FE2798");
 
             entity.ToTable("ProductCostHistory");
 
@@ -111,7 +107,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductInventory>(entity =>
         {
-            entity.HasKey(e => new { e.ProductId, e.LocationId }).HasName("PK__ProductI__DA732CAAC3FD383F");
+            entity.HasKey(e => new { e.ProductId, e.LocationId }).HasName("PK__ProductI__DA732CAAF88FC857");
 
             entity.ToTable("ProductInventory");
 
@@ -122,7 +118,7 @@ public partial class ProductManagementDbContext : DbContext
             entity.HasOne(d => d.Location).WithMany(p => p.ProductInventories)
                 .HasForeignKey(d => d.LocationId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__ProductIn__Locat__5CD6CB2B");
+                .HasConstraintName("FK__ProductIn__Locat__2F10007B");
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductInventories)
                 .HasForeignKey(d => d.ProductId)
@@ -132,7 +128,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductModel>(entity =>
         {
-            entity.HasKey(e => e.ModelId).HasName("PK__ProductM__E8D7A1CC5F64B926");
+            entity.HasKey(e => e.ModelId).HasName("PK__ProductM__E8D7A1CC1A6A50F4");
 
             entity.ToTable("ProductModel");
 
@@ -144,7 +140,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductPriceHistory>(entity =>
         {
-            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductP__D0ED5922A55F6A1B");
+            entity.HasKey(e => new { e.ProductId, e.StartDate }).HasName("PK__ProductP__D0ED5922479C2C6C");
 
             entity.ToTable("ProductPriceHistory");
 
@@ -161,7 +157,7 @@ public partial class ProductManagementDbContext : DbContext
 
         modelBuilder.Entity<ProductSubcategory>(entity =>
         {
-            entity.HasKey(e => e.SubcategoryId).HasName("PK__ProductS__9C4E707DDB0C5DE3");
+            entity.HasKey(e => e.SubcategoryId).HasName("PK__ProductS__9C4E707DC8C4A443");
 
             entity.ToTable("ProductSubcategory");
 
