@@ -67,8 +67,8 @@ namespace Product_Management_System.Views.ProductCostHistory
             LoadProductCostHistory();
         }
 
-        private void btnCreate_Click(object sender, RoutedEventArgs e)  //Tạm thời không biết có hoạt động hay không
-        {                                                               //vì bị vướng foreign key productId với bảng Product
+        private void btnCreate_Click(object sender, RoutedEventArgs e)  
+        {                                                               
             try
             {
                 var newCostHistory = new Models.ProductCostHistory
