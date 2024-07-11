@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Product_Management_System.Repositories.CostHistory
+namespace Product_Management_System.Services.CostHistoryServices
 {
-    public interface ICostHistoryRepository
+    public interface ICostHistoryService
     {
         List<ProductCostHistory> GetAllCostHistories();
         void InsertCostHistory(ProductCostHistory costHistory);

@@ -2,6 +2,7 @@ using Product_Management_System.Data;
 using Product_Management_System.Models;
 using Product_Management_System.Repositories;
 using Product_Management_System.Repositories.Authentication;
+using Product_Management_System.Views.CostHistory;
 using System.Windows;
 using System.Windows.Input;
 
@@ -52,6 +53,11 @@ namespace Product_Management_System
         private void btnPriceHistory_Click(object sender, RoutedEventArgs e)
         {
             frMainContent.Navigate(new ProductPriceHistoryPage());
+        }
+
+        private void btnCostHistory_Click(object sender, RoutedEventArgs e)
+        {
+            frMainContent.Navigate(new ProductCostHistoryPage());
         }
 
         private void txtUserFullName_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
