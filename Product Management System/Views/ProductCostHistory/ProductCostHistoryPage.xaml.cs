@@ -50,7 +50,7 @@ namespace Product_Management_System.Views.ProductCostHistory
 
         private void dgData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dgData.SelectedItem is ProductCostHistory selectedProduct)
+            if (dgData.SelectedItem is Models.ProductCostHistory selectedProduct)
             {
                 txtProductID.Text = selectedProduct.ProductId.ToString();
                 dpStartDate.SelectedDate = selectedProduct.StartDate;
@@ -71,7 +71,7 @@ namespace Product_Management_System.Views.ProductCostHistory
         {                                                               //vì bị vướng foreign key productId với bảng Product
             try
             {
-                var newCostHistory = new ProductCostHistory
+                var newCostHistory = new Models.ProductCostHistory
                 {
                     StartDate = dpStartDate.SelectedDate.HasValue
                                     ? dpStartDate.SelectedDate.Value : DateTime.Now,
@@ -97,7 +97,7 @@ namespace Product_Management_System.Views.ProductCostHistory
         {
             try
             {
-                if (dgData.SelectedItem is ProductCostHistory selectedProduct)
+                if (dgData.SelectedItem is Models.ProductCostHistory selectedProduct)
                 //if (int.TryParse(txtProductID.Text, out int productId))
                 {
                     selectedProduct.StartDate = dpStartDate.SelectedDate.HasValue
@@ -125,7 +125,7 @@ namespace Product_Management_System.Views.ProductCostHistory
         {
             try
             {
-                if (dgData.SelectedItem is ProductCostHistory selectedProduct)
+                if (dgData.SelectedItem is Models.ProductCostHistory selectedProduct)
                 {
                     iProductCostHistoryService.DeleteProductCostHistory(selectedProduct);
                     LoadProductCostHistory();
