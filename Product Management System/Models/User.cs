@@ -19,7 +19,5 @@ public partial class User
 
     public int RoleId { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
-
     public virtual Role Role { get; set; } = null!;
 }
