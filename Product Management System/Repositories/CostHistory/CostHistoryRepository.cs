@@ -12,27 +12,27 @@ namespace Product_Management_System.Repositories.CostHistory
     {
         public void DeleteCostHistory(ProductCostHistory costHistory)
         {
-            ProductCostHistoryDAO.DeleteCostHistory(costHistory);
+            ProductCostHistoryDAO.DeleteProductCostHistory(costHistory);
         }
 
         public List<ProductCostHistory> GetAllCostHistories()
         {
-            return ProductCostHistoryDAO.GetAllCostHistories();
+            return ProductCostHistoryDAO.GetProductCostHistories();
         }
 
         public ProductCostHistory? GetCostHistoryById(int id)
         {
-            return ProductCostHistoryDAO.GetCostHistoryById(id);
+            return ProductCostHistoryDAO.GetProductCostHistoryById(id);
         }
 
         public void InsertCostHistory(ProductCostHistory costHistory)
         {
-            ProductCostHistoryDAO.InsertCostHistory(costHistory);
+            ProductCostHistoryDAO.InsertProductCostHistory(costHistory);
         }
 
         public void UpdateCostHistory(ProductCostHistory costHistory)
         {
-            ProductCostHistoryDAO.UpdateCostHistory(costHistory);
+            ProductCostHistoryDAO.UpdateProductCostHistory(costHistory);
         }
     }
 }
