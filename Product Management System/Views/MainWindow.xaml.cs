@@ -1,4 +1,5 @@
 ﻿using Product_Management_System.Data;
+using Product_Management_System.Views.ManageProduct;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,5 +29,11 @@ namespace Product_Management_System
         {
             frProductPriceHistory.Content = new ProductPriceHistoryPage();
         }
+        private void btnProductManage_Click(object sender, RoutedEventArgs e)
+        {
+            frProductPriceHistory.Content = new ManageProductPage();
+
+        }
+
     }
 }

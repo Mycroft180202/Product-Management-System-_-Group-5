@@ -12,9 +12,11 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <Button Name="btnPriceHistory" Content="Product Price History" VerticalAlignment="Top" Height="40" Width="150" 
                 Click="btnPriceHistory_Click" Grid.Row="0" HorizontalAlignment="Left"/>
         <Frame Name="frProductPriceHistory" NavigationUIVisibility="Hidden" Grid.Row="1"/>
+        <Button x:Name="btnProductManage" Content="Product Manage" VerticalAlignment="Center" Height="40" Width="150" 
+            HorizontalAlignment="Center" Click="btnProductManage_Click"/>
     </Grid>
 </Window>
