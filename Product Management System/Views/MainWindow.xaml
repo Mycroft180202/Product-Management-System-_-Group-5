@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Product_Management_System"
         mc:Ignorable="d"
-            Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="600" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,12 +13,22 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Button Name="btnPriceHistory" Content="Product Price History" VerticalAlignment="Top" Height="40" Width="150" 
-            Click="btnPriceHistory_Click" Grid.Row="0" HorizontalAlignment="Left"/>
-        <Frame Name="frProductPriceHistory" NavigationUIVisibility="Hidden" Grid.Row="1"/>
+        <DockPanel LastChildFill="True">
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <Button Name="btnPriceHistory" Content="Product Price History" VerticalAlignment="Top" Height="40" Width="150" 
+             Click="btnPriceHistory_Click" Margin="5"/>
+                <Button Name="btnProductInventory" Content="Product Inventory" VerticalAlignment="Top" Height="40" Width="150" 
+             Click="btnProductInventory_Click" Margin="5"/>
+            </StackPanel>
 
-        <Button Name="btnCostHistory" Content="Product Cost History" VerticalAlignment="Center" Height="40" Width="150" 
-    Click="btnCostHistory_Click" HorizontalAlignment="Left" Margin="160,0,0,0"/>
-        <Frame Name="frProductCostHistory" NavigationUIVisibility="Hidden" Grid.Row="1"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right">
+                <TextBlock Text="Hello, " FontSize="14" FontWeight="Medium" VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtUserFullName" Text="" FontSize="14" FontWeight="Medium" 
+               Foreground="Blue" VerticalAlignment="Center" Cursor="Hand" 
+               MouseLeftButtonDown="txtUserFullName_MouseLeftButtonDown"/>
+            </StackPanel>
+        </DockPanel>
+
+        <Frame Name="frMainContent" NavigationUIVisibility="Hidden" Grid.Row="1"/>
     </Grid>
 </Window>
