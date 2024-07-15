@@ -52,13 +52,23 @@
             <Button Name="btnClearFilter" Content="Clear Filter" Width="80" HorizontalAlignment="Left" Margin="7" Click="btnClearFilter_Click"/>
         </StackPanel>
 
-        <DataGrid x:Name="dgData" AutoGenerateColumns="True" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4" Margin="2" 
-                  SelectionChanged="dgData_SelectionChanged"/>
-        <Button Name="btnCreate" Content="Create" HorizontalAlignment="Left" Width="100" Grid.Row="6" Grid.Column="2" 
-                Foreground="White" Background="Green" Margin="2" Click="btnCreate_Click"/>
+        <DataGrid x:Name="dgData" AutoGenerateColumns="False" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="4" Margin="2" 
+                  SelectionChanged="dgData_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=ProductId}" Header="ProductId" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path=StartDate}" Header="StartDate" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path=EndDate}" Header="EndDate" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Path=Price}" Header="Price" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <!--<Button Name="btnCreate" Content="Create" HorizontalAlignment="Left" Width="100" Grid.Row="6" Grid.Column="2" 
+                Foreground="White" Background="Green" Margin="2" Click="btnCreate_Click"/>-->
+        
         <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Grid.Row="6" Grid.Column="3" Width="100"
                 Foreground="White" Background="Blue" Margin="2" Click="btnUpdate_Click"/>
-        <Button Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Grid.Row="6" Grid.Column="4" Width="100"
-                Foreground="White" Background="BlueViolet" Margin="2" Click="btnDelete_Click"/>
+        
+        <!--<Button Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Grid.Row="6" Grid.Column="4" Width="100"
+                Foreground="White" Background="BlueViolet" Margin="2" Click="btnDelete_Click"/>-->
     </Grid>
 </Page>
