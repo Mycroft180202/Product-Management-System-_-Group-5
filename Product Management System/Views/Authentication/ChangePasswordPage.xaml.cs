@@ -1,28 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using Product_Management_System.Data;
+using Product_Management_System.Models;
+using Product_Management_System.Repositories;
+using Product_Management_System.Repositories.Authentication;
 
 namespace Product_Management_System.Views.Authentication
 {
-    /// <summary>
-    /// Interaction logic for ChangePasswordPage.xaml
-    /// </summary>
-    public partial class ChangePasswordPage : Page
+    public partial class ChangePasswordWindow : Window
     {
-        public ChangePasswordPage()
+        private readonly UserRepository _userRepository;
+        private readonly User _currentUser;
+
+        public ChangePasswordWindow(User currentUser)
         {
             InitializeComponent();
+            _userRepository = new UserRepository(new ProductManagementDbContext());
+            _currentUser = currentUser;
+        }
+
+        private void btnChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            string currentPassword = txtCurrentPassword.Password;
+            string newPassword = txtNewPassword.Password;
+            string confirmNewPassword = txtConfirmNewPassword.Password;
+
+            if (currentPassword != _currentUser.Password)
+            {
+                MessageBox.Show("Current password is incorrect.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (newPassword != confirmNewPassword)
+            {
+                MessageBox.Show("New passwords do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            _currentUser.Password = newPassword;
+            _userRepository.UpdateUser(_currentUser);
+
+            MessageBox.Show("Password changed successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
         }
     }
 }

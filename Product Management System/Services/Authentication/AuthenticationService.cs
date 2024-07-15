@@ -14,10 +14,7 @@ namespace Product_Management_System.Services
 
         public User? Authenticate(string username, string password)
         {
-            // Lấy người dùng từ repository
             var user = _userRepository.GetUserByUsernameAndPassword(username, password);
-
-            // Nếu tìm thấy người dùng và người dùng đang hoạt động, trả về người dùng, nếu không thì trả về null
             return user;
         }
     }

@@ -192,7 +192,7 @@ namespace Product_Management_System.Views.ManageProduct
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            grdProduct.ItemsSource = con.Products.Where(p=>p.Name.Contains(txtSearch.Text)).ToList();
+            grdProduct.ItemsSource = con.Products.Where(p => p.Name.Contains(txtSearch.Text)).ToList();
         }
     }
 }

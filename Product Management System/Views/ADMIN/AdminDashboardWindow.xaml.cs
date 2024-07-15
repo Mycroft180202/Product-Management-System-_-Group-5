@@ -1,27 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Product_Management_System.Data;
+using Product_Management_System.Models;
+using Product_Management_System.Repositories;
+using Product_Management_System.Repositories.Authentication;
 
-namespace Product_Management_System.Views.ADMIN
+namespace Product_Management_System.Views.Admin
 {
-    /// <summary>
-    /// Interaction logic for AdminDashboardWindow.xaml
-    /// </summary>
     public partial class AdminDashboardWindow : Window
     {
+        private readonly UserRepository _userRepository;
+
         public AdminDashboardWindow()
         {
             InitializeComponent();
+            _userRepository = new UserRepository(new ProductManagementDbContext());
+            LoadUsers();
+        }
+
+        private void LoadUsers()
+        {
+            List<User> users = _userRepository.GetAllUsers();
+            lvUsers.ItemsSource = users;
+        }
+
+        private void btnActivate_Click(object sender, RoutedEventArgs e)
+        {
+            User selectedUser = (User)lvUsers.SelectedItem;
+            if (selectedUser != null)
+            {
+                selectedUser.IsActive = true;
+                _userRepository.UpdateUser(selectedUser);
+                LoadUsers();
+            }
+        }
+
+        private void btnDeactivate_Click(object sender, RoutedEventArgs e)
+        {
+            User selectedUser = (User)lvUsers.SelectedItem;
+            if (selectedUser != null)
+            {
+                selectedUser.IsActive = false;
+                _userRepository.UpdateUser(selectedUser);
+                LoadUsers();
+            }
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            User selectedUser = (User)lvUsers.SelectedItem;
+            if (selectedUser != null)
+            {
+                _userRepository.DeleteUser(selectedUser.Id);
+                LoadUsers();
+            }
         }
     }
 }
