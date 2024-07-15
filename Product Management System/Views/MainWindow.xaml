@@ -19,6 +19,8 @@
              Click="btnPriceHistory_Click" Margin="5"/>
                 <Button Name="btnProductInventory" Content="Product Inventory" VerticalAlignment="Top" Height="40" Width="150" 
              Click="btnProductInventory_Click" Margin="5"/>
+                <Button Name="btnCostHistory" Content="Product Cost History" VerticalAlignment="Top" Height="40" Width="150" 
+            Click="btnCostHistory_Click" Margin="5"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right">
