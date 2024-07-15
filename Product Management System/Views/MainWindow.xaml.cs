@@ -75,11 +75,5 @@ namespace Product_Management_System
             frMainContent.Content = new ManageProductPage();
 
         }
-        private void btnProductManage_Click(object sender, RoutedEventArgs e)
-        {
-            frProductPriceHistory.Content = new ManageProductPage();
-
-        }
-
     }
 }
