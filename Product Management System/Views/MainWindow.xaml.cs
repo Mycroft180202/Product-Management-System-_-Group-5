@@ -2,6 +2,7 @@ using Product_Management_System.Data;
 using Product_Management_System.Models;
 using Product_Management_System.Repositories;
 using Product_Management_System.Repositories.Authentication;
+using Product_Management_System.Views.ManageProduct;
 using System.Windows;
 using System.Windows.Input;
 
@@ -67,6 +68,12 @@ namespace Product_Management_System
                     txtUserFullName.Text = currentUser.Fullname;
                 }
             }
+        }
+
+        private void btnProductManage_Click(object sender, RoutedEventArgs e)
+        {
+            frMainContent.Content = new ManageProductPage();
+
         }
     }
 }
