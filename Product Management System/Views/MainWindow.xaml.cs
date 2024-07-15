@@ -2,11 +2,8 @@
 using Product_Management_System.Models;
 using Product_Management_System.Repositories;
 using Product_Management_System.Repositories.Authentication;
-<<<<<<< HEAD
 using Product_Management_System.Views.CostHistory;
-=======
 using Product_Management_System.Views.ManageProduct;
->>>>>>> master
 using System.Windows;
 using System.Windows.Input;
 
