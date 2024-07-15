@@ -2,7 +2,11 @@
 using Product_Management_System.Models;
 using Product_Management_System.Repositories;
 using Product_Management_System.Repositories.Authentication;
+<<<<<<< HEAD
 using Product_Management_System.Views.CostHistory;
+=======
+using Product_Management_System.Views.ManageProduct;
+>>>>>>> master
 using System.Windows;
 using System.Windows.Input;
 
@@ -73,6 +77,12 @@ namespace Product_Management_System
                     txtUserFullName.Text = currentUser.Fullname;
                 }
             }
+        }
+
+        private void btnProductManage_Click(object sender, RoutedEventArgs e)
+        {
+            frMainContent.Content = new ManageProductPage();
+
         }
     }
 }
