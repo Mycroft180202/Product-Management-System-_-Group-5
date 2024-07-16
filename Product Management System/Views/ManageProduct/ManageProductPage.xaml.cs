@@ -25,9 +25,23 @@ namespace Product_Management_System.Views.ManageProduct
     {
 
         private ProductManagementDbContext con = new ProductManagementDbContext();
-        public ManageProductPage()
+        private readonly User _currentUser;
+
+        public ManageProductPage(User currentUser)
         {
             InitializeComponent();
+            _currentUser = currentUser;
+            LoadPage();
+            ConfigureAdminFeatures();
+
+        }
+        private void ConfigureAdminFeatures()
+        {
+            if (_currentUser.RoleId == 1) // Admin
+            {
+                btnAdd.Visibility = Visibility.Visible;
+                btnDelete.Visibility = Visibility.Visible;
+            }
         }
 
         private void LoadPage()
@@ -76,114 +90,114 @@ namespace Product_Management_System.Views.ManageProduct
             clear();
         }
 
-        //private void btnAdd_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-        //        var maxProductId = con.Products.Max(p => p.ProductId);
-        //        var newProduct = new Product();
-        //        newProduct.ProductId = maxProductId + 1;
-        //        newProduct.Name = tbName.Text;
-        //        newProduct.Color = tbColor.Text;
-        //        newProduct.Cost = decimal.Parse(tbCost.Text);
-        //        newProduct.Price = decimal.Parse(tbPrice.Text);
-        //        newProduct.SubcategoryId = (cbCategory.SelectedItem as ProductSubcategory)?.SubcategoryId;
-        //        newProduct.ModelId = (cbModel.SelectedItem as ProductModel)?.ModelId;
-        //        newProduct.SellStartDate = dtpStart.SelectedDate ?? DateTime.Now;
-        //        newProduct.SellEndDate = dtpEnd.SelectedDate;
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var maxProductId = con.Products.Max(p => p.ProductId);
+                var newProduct = new Product();
+                newProduct.ProductId = maxProductId + 1;
+                newProduct.Name = tbName.Text;
+                newProduct.Color = tbColor.Text;
+                newProduct.Cost = decimal.Parse(tbCost.Text);
+                newProduct.Price = decimal.Parse(tbPrice.Text);
+                newProduct.SubcategoryId = (cbCategory.SelectedItem as ProductSubcategory)?.SubcategoryId;
+                newProduct.ModelId = (cbModel.SelectedItem as ProductModel)?.ModelId;
+                newProduct.SellStartDate = dtpStart.SelectedDate ?? DateTime.Now;
+                newProduct.SellEndDate = dtpEnd.SelectedDate;
 
-        //        con.Products.Add(newProduct);
-        //        con.SaveChanges();
-        //        LoadPage();
-        //        clear();
+                con.Products.Add(newProduct);
+                con.SaveChanges();
+                LoadPage();
+                clear();
 
-        //        MessageBox.Show("Product added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Failed to add product. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
+                MessageBox.Show("Product added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to add product. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-        //private void btnUpdate_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (int.TryParse(tbId.Text, out int productId))
-        //    {
-        //        var productToUpdate = con.Products.FirstOrDefault(p => p.ProductId == productId);
-        //        if (productToUpdate != null)
-        //        {
-        //            try
-        //            {
-        //                productToUpdate.Name = tbName.Text;
-        //                productToUpdate.Color = tbColor.Text;
-        //                productToUpdate.Cost = decimal.Parse(tbCost.Text);
-        //                productToUpdate.Price = decimal.Parse(tbPrice.Text);
-        //                productToUpdate.SubcategoryId = (cbCategory.SelectedItem as ProductSubcategory)?.SubcategoryId;
-        //                productToUpdate.ModelId = (cbModel.SelectedItem as ProductModel)?.ModelId;
-        //                productToUpdate.SellStartDate = dtpStart.SelectedDate ?? DateTime.Now;
-        //                productToUpdate.SellEndDate = dtpEnd.SelectedDate;
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(tbId.Text, out int productId))
+            {
+                var productToUpdate = con.Products.FirstOrDefault(p => p.ProductId == productId);
+                if (productToUpdate != null)
+                {
+                    try
+                    {
+                        productToUpdate.Name = tbName.Text;
+                        productToUpdate.Color = tbColor.Text;
+                        productToUpdate.Cost = decimal.Parse(tbCost.Text);
+                        productToUpdate.Price = decimal.Parse(tbPrice.Text);
+                        productToUpdate.SubcategoryId = (cbCategory.SelectedItem as ProductSubcategory)?.SubcategoryId;
+                        productToUpdate.ModelId = (cbModel.SelectedItem as ProductModel)?.ModelId;
+                        productToUpdate.SellStartDate = dtpStart.SelectedDate ?? DateTime.Now;
+                        productToUpdate.SellEndDate = dtpEnd.SelectedDate;
 
-        //                con.SaveChanges();
-        //                LoadPage();
-        //                clear();
+                        con.SaveChanges();
+                        LoadPage();
+                        clear();
 
-        //                MessageBox.Show("Product updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                MessageBox.Show($"Failed to update product. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Product not found!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        }
-        //    }
-        //}
+                        MessageBox.Show("Product updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to update product. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Product not found!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
 
-        //private void btnDelete_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (int.TryParse(tbId.Text, out int productId))
-        //    {
-        //        var productToDelete = con.Products
-        //            .Include(r => r.ProductCostHistories)
-        //            .Include(x => x.ProductInventories)
-        //            .Include(y => y.ProductPriceHistories)
-        //            .FirstOrDefault(p => p.ProductId == productId);
-        //        if (productToDelete != null)
-        //        {
-        //            try
-        //            {
-        //                if (productToDelete.ProductInventories.Count > 0)
-        //                {
-        //                    con.ProductInventories.RemoveRange(productToDelete.ProductInventories);
-        //                }
-        //                if (productToDelete.ProductPriceHistories.Count > 0)
-        //                {
-        //                    con.ProductPriceHistories.RemoveRange(productToDelete.ProductPriceHistories);
-        //                }
-        //                if (productToDelete.ProductCostHistories.Count > 0)
-        //                {
-        //                    con.ProductCostHistories.RemoveRange(productToDelete.ProductCostHistories);
-        //                }
-        //                con.Products.Remove(productToDelete);
-        //                con.SaveChanges();
-        //                LoadPage();
-        //                clear();
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(tbId.Text, out int productId))
+            {
+                var productToDelete = con.Products
+                    .Include(r => r.ProductCostHistories)
+                    .Include(x => x.ProductInventories)
+                    .Include(y => y.ProductPriceHistories)
+                    .FirstOrDefault(p => p.ProductId == productId);
+                if (productToDelete != null)
+                {
+                    try
+                    {
+                        if (productToDelete.ProductInventories.Count > 0)
+                        {
+                            con.ProductInventories.RemoveRange(productToDelete.ProductInventories);
+                        }
+                        if (productToDelete.ProductPriceHistories.Count > 0)
+                        {
+                            con.ProductPriceHistories.RemoveRange(productToDelete.ProductPriceHistories);
+                        }
+                        if (productToDelete.ProductCostHistories.Count > 0)
+                        {
+                            con.ProductCostHistories.RemoveRange(productToDelete.ProductCostHistories);
+                        }
+                        con.Products.Remove(productToDelete);
+                        con.SaveChanges();
+                        LoadPage();
+                        clear();
 
-        //                MessageBox.Show("Product deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                MessageBox.Show($"Failed to delete product. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Product not found!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        }
-        //    }
-        //}
+                        MessageBox.Show("Product deleted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to delete product. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Product not found!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {

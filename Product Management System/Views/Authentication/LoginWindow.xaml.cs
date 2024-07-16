@@ -45,16 +45,8 @@ namespace Product_Management_System.Views.Authentication
             {
                 MessageBox.Show("Đăng nhập thành công!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                if (user.RoleId == 1) // Admin
-                {
-                    AdminDashboardWindow adminDashboard = new AdminDashboardWindow();
-                    adminDashboard.Show();
-                }
-                else if (user.RoleId == 2) // Staff
-                {
-                   MainWindow mainWindow = new MainWindow(user);
-                    mainWindow.Show();
-                }
+                MainWindow mainWindow = new MainWindow(user);
+                mainWindow.Show();
 
                 this.Close();
             }
@@ -63,6 +55,7 @@ namespace Product_Management_System.Views.Authentication
                 MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng hoặc tài khoản chưa được kích hoạt.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {

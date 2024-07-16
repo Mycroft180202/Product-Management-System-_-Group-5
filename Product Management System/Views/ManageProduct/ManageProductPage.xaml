@@ -20,9 +20,9 @@
             <TextBox x:Name="tbName" HorizontalAlignment="Left" Margin="64,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
             <ComboBox x:Name="cbCategory" DisplayMemberPath="Name" HorizontalAlignment="Left" Margin="64,165,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.458,1.049" SelectedValuePath="SubcategoryId"/>
             <Label Content="Category" HorizontalAlignment="Left" Margin="0,161,0,0" VerticalAlignment="Top"/>
-            <!--<Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="10,366,0,0" VerticalAlignment="Top" Click="btnAdd_Click" Width="59" />
+            <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="10,366,0,0" VerticalAlignment="Top" Click="btnAdd_Click" Width="59" Visibility="Collapsed"/>
             <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Center" Margin="0,366,0,0" VerticalAlignment="Top" Click="btnUpdate_Click" Width="57" />
-            <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="195,366,0,0" VerticalAlignment="Top" Click="btnDelete_Click" Width="62" />-->
+            <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="195,366,0,0" VerticalAlignment="Top" Click="btnDelete_Click" Width="62"  Visibility="Collapsed" />
             <Label Content="Color" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top"/>
             <Label Content="Cost" HorizontalAlignment="Left" Margin="10,99,0,0" VerticalAlignment="Top"/>
             <Label Content="Price" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top"/>

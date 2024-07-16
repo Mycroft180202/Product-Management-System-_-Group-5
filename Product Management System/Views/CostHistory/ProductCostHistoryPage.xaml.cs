@@ -1,38 +1,45 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Product_Management_System.Data;
-using Product_Management_System.Models;
-using Product_Management_System.Services;
+﻿using Product_Management_System.Models;
+using Product_Management_System.Services.CostHistoryServices;
 using Product_Management_System.Services.PriceHistoryServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace Product_Management_System
+namespace Product_Management_System.Views.CostHistory
 {
     /// <summary>
-    /// Interaction logic for ProductPriceHistoryWindow.xaml
+    /// Interaction logic for ProductCostHistoryPage.xaml
     /// </summary>
-    public partial class ProductPriceHistoryPage : Page
+    public partial class ProductCostHistoryPage : Page
     {
-        private readonly IPriceHistoryService _priceHistoryService;
+        private readonly ICostHistoryService iCostHistoryService;
         private readonly User _currentUser;
 
-        public ProductPriceHistoryPage(User currentUser)
+        public ProductCostHistoryPage(User currentUser)
         {
             InitializeComponent();
-            _priceHistoryService = new PriceHistoryService();
+            iCostHistoryService = new CostHistoryService();
             _currentUser = currentUser;
-            LoadProductPriceHistory();
+            LoadProductCostHistory();
             ConfigureAdminFeatures();
         }
 
-        private void LoadProductPriceHistory()
+        private void LoadProductCostHistory()
         {
             dgData.ItemsSource = null;
-            var price_history = _priceHistoryService.GetAllPriceHistories();
-            dgData.ItemsSource = price_history;
+            var Cost_history = iCostHistoryService.GetAllCostHistories();
+            dgData.ItemsSource = Cost_history;
         }
 
         private void ClearInputField()
@@ -40,44 +47,44 @@ namespace Product_Management_System
             txtProductID.Clear();
             dpStartDate.SelectedDate = null;
             dpEndDate.SelectedDate = null;
-            txtPrice.Clear();
-            txtFilterPrice.Clear();
+            txtCost.Clear();
+            txtFilterCost.Clear();
             dpFilterStartDate.SelectedDate = null;
             dpFilterEndDate.SelectedDate = null;
         }
 
         private void dgData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (dgData.SelectedItem is ProductPriceHistory selectedProduct)
+            if (dgData.SelectedItem is ProductCostHistory selectedProduct)
             {
                 txtProductID.Text = selectedProduct.ProductId.ToString();
                 dpStartDate.SelectedDate = selectedProduct.StartDate;
                 dpEndDate.SelectedDate = selectedProduct.EndDate.HasValue
                     ? selectedProduct.EndDate
                     : (DateTime?)null;
-                txtPrice.Text = selectedProduct.Price.ToString();
+                txtCost.Text = selectedProduct.Cost.ToString();
             }
         }
 
         private void btnClearFilter_Click(object sender, RoutedEventArgs e)
         {
             ClearInputField();
-            LoadProductPriceHistory();
+            LoadProductCostHistory();
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var newPriceHistory = new ProductPriceHistory
+                var newCostHistory = new ProductCostHistory
                 {
                     StartDate = dpStartDate.SelectedDate.HasValue
                                     ? dpStartDate.SelectedDate.Value : DateTime.Now,
                     EndDate = dpEndDate.SelectedDate,
-                    Price = decimal.Parse(txtPrice.Text)
+                    Cost = decimal.Parse(txtCost.Text)
                 };
-                _priceHistoryService.InsertPriceHistory(newPriceHistory);
-                LoadProductPriceHistory();
+                iCostHistoryService.InsertCostHistory(newCostHistory);
+                LoadProductCostHistory();
                 ClearInputField();
             }
             catch (Exception ex)
@@ -86,23 +93,25 @@ namespace Product_Management_System
             }
             finally
             {
-                LoadProductPriceHistory();
+                LoadProductCostHistory();
             }
+
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (dgData.SelectedItem is ProductPriceHistory selectedProduct)
+                if (dgData.SelectedItem is ProductCostHistory selectedProduct)
+                //if (int.TryParse(txtProductID.Text, out int productId))
                 {
                     selectedProduct.StartDate = dpStartDate.SelectedDate.HasValue
                         ? dpStartDate.SelectedDate.Value : DateTime.Now;
                     selectedProduct.EndDate = dpEndDate.SelectedDate;
-                    selectedProduct.Price = decimal.Parse(txtPrice.Text);
+                    selectedProduct.Cost = decimal.Parse(txtCost.Text);
 
-                    _priceHistoryService.UpdatePriceHistory(selectedProduct);
-                    LoadProductPriceHistory();
+                    iCostHistoryService.UpdateCostHistory(selectedProduct);
+                    LoadProductCostHistory();
                     ClearInputField();
                 }
             }
@@ -112,18 +121,19 @@ namespace Product_Management_System
             }
             finally
             {
-                LoadProductPriceHistory();
+                LoadProductCostHistory();
             }
+
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (dgData.SelectedItem is ProductPriceHistory selectedProduct)
+                if (dgData.SelectedItem is ProductCostHistory selectedProduct)
                 {
-                    _priceHistoryService.DeletePriceHistory(selectedProduct);
-                    LoadProductPriceHistory();
+                    iCostHistoryService.DeleteCostHistory(selectedProduct);
+                    LoadProductCostHistory();
                     ClearInputField();
                 }
                 else
@@ -137,7 +147,7 @@ namespace Product_Management_System
             }
             finally
             {
-                LoadProductPriceHistory();
+                LoadProductCostHistory();
             }
         }
 
@@ -145,14 +155,14 @@ namespace Product_Management_System
         {
             DateTime? startDate = dpFilterStartDate.SelectedDate;
             DateTime? endDate = dpFilterEndDate.SelectedDate;
-            decimal? price = null;
+            decimal? Cost = null;
 
-            if (!string.IsNullOrWhiteSpace(txtFilterPrice.Text) && decimal.TryParse(txtFilterPrice.Text, out decimal parsedPrice))
+            if (!string.IsNullOrWhiteSpace(txtFilterCost.Text) && decimal.TryParse(txtFilterCost.Text, out decimal parsedCost))
             {
-                price = parsedPrice;
+                Cost = parsedCost;
             }
 
-            var filteredHistories = _priceHistoryService.GetAllPriceHistories().AsQueryable();
+            var filteredHistories = iCostHistoryService.GetAllCostHistories().AsQueryable();
 
             if (startDate != null)
             {
@@ -164,9 +174,9 @@ namespace Product_Management_System
                 filteredHistories = filteredHistories.Where(h => h.EndDate <= endDate);
             }
 
-            if (price != null)
+            if (Cost != null)
             {
-                filteredHistories = filteredHistories.Where(h => h.Price == price);
+                filteredHistories = filteredHistories.Where(h => h.Cost == Cost);
             }
 
             dgData.ItemsSource = filteredHistories.ToList();

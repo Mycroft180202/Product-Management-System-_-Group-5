@@ -53,10 +53,10 @@
                   SelectionChanged="dgData_SelectionChanged"/>
 
         <Button Name="btnCreate" Content="Create" HorizontalAlignment="Left" Width="100" Grid.Row="7" Grid.Column="2" 
-                Foreground="White" Background="Green" Margin="2" Click="btnCreate_Click"/>
+                Foreground="White" Background="Green" Margin="2" Click="btnCreate_Click" Visibility="Collapsed"/>
         <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Grid.Row="7" Grid.Column="3" Width="100"
                 Foreground="White" Background="Blue" Margin="2" Click="btnUpdate_Click"/>
         <Button Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Grid.Row="7" Grid.Column="4" Width="100"
-                Foreground="White" Background="BlueViolet" Margin="2" Click="btnDelete_Click"/>
+                Foreground="White" Background="BlueViolet" Margin="2" Click="btnDelete_Click" Visibility="Collapsed"/>
     </Grid>
 </Page>

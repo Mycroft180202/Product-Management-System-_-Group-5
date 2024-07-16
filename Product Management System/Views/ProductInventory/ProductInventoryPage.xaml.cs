@@ -12,12 +12,22 @@ namespace Product_Management_System
 	{
 		private readonly IInventoryService _inventoryService;
 		private List<ProductInventory> _inventories;
+		private readonly User _currentUser;
 
 		public ProductInventoryPage()
 		{
 			InitializeComponent();
 			_inventoryService = new InventoryService();
 			LoadInventories();
+		}
+
+		public ProductInventoryPage(User currentUser)
+		{
+			InitializeComponent();
+            _inventoryService = new InventoryService();
+            _currentUser = currentUser;
+            LoadInventories();
+            ConfigureAdminFeatures();
 		}
 
 		private void LoadInventories()
@@ -141,5 +151,14 @@ namespace Product_Management_System
 			txtBin.Clear();
 			txtQuantity.Clear();
 		}
-	}
+
+        private void ConfigureAdminFeatures()
+        {
+            if (_currentUser.RoleId == 1) // Admin
+            {
+                btnCreate.Visibility = Visibility.Visible;
+                btnDelete.Visibility = Visibility.Visible;
+            }
+        }
+    }
 }

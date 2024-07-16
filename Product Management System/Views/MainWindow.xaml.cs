@@ -2,6 +2,9 @@ using Product_Management_System.Data;
 using Product_Management_System.Models;
 using Product_Management_System.Repositories;
 using Product_Management_System.Repositories.Authentication;
+using Product_Management_System.Views.Admin;
+using Product_Management_System.Views.Authentication;
+using Product_Management_System.Views.CostHistory;
 using Product_Management_System.Views.ManageProduct;
 using System.Windows;
 using System.Windows.Input;
@@ -20,6 +23,10 @@ namespace Product_Management_System
             dbContext = new ProductManagementDbContext();
             userRepository = new UserRepository(dbContext);
             currentUser = user;
+            if (currentUser.RoleId == 1) // Admin
+            {
+                btnDashboard.Visibility = Visibility.Visible;
+            }
             LoadUserInfo();
 
         }
@@ -31,6 +38,12 @@ namespace Product_Management_System
             userRepository = new UserRepository(dbContext);
             currentUser = userRepository.GetUserByUsername("default_username"); 
             LoadUserInfo();
+        }
+
+        private void btnDashboard_Click(object sender, RoutedEventArgs e)
+        {
+            AdminDashboardWindow adminDashboard = new AdminDashboardWindow();
+            adminDashboard.Show();
         }
 
         private void LoadUserInfo()
@@ -48,11 +61,14 @@ namespace Product_Management_System
         private void btnProductInventory_Click(object sender, RoutedEventArgs e)
         {
             frMainContent.Navigate(new ProductInventoryPage());
+            ProductInventoryPage productInventoryPage = new ProductInventoryPage(currentUser);
+            frMainContent.Navigate(productInventoryPage);
         }
 
         private void btnPriceHistory_Click(object sender, RoutedEventArgs e)
         {
-            frMainContent.Navigate(new ProductPriceHistoryPage());
+            ProductPriceHistoryPage priceHistoryPage = new ProductPriceHistoryPage(currentUser);
+            frMainContent.Navigate(priceHistoryPage);
         }
 
         private void txtUserFullName_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -72,8 +88,21 @@ namespace Product_Management_System
 
         private void btnProductManage_Click(object sender, RoutedEventArgs e)
         {
-            frMainContent.Content = new ManageProductPage();
+            ManageProductPage priceHistoryPage = new ManageProductPage(currentUser);
+            frMainContent.Navigate(priceHistoryPage);
+        }
 
+        private void btnCostHistory_Click(object sender, RoutedEventArgs e)
+        {
+            ProductCostHistoryPage costHistoryPage = new ProductCostHistoryPage(currentUser);
+            frMainContent.Navigate(costHistoryPage);
+        }
+
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
         }
     }
 }

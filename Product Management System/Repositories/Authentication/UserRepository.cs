@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Product_Management_System.Data;
 using Product_Management_System.Models;
 
@@ -16,7 +17,7 @@ namespace Product_Management_System.Repositories.Authentication
 
         public List<User> GetAllUsers()
         {
-            return _context.Users.ToList();
+            return _context.Users.Include(u => u.Role).ToList();
         }
 
         public void UpdateUser(User user)
@@ -51,5 +52,7 @@ namespace Product_Management_System.Repositories.Authentication
             return _context.Users
                 .FirstOrDefault(u => u.Username == username && u.Password == password && u.IsActive);
         }
+
+
     }
 }
