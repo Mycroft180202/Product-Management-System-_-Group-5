@@ -31,7 +31,7 @@
            Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Left" Width="550" FontWeight="Bold"/>
 
         <Label Name="lblProductID" Content="Product ID" Grid.Row="1" Grid.Column="0"/>
-        <TextBox Name="txtProductID" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" Margin="4" IsEnabled="False"/>
+        <TextBox Name="txtProductID" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" Margin="4" IsEnabled="True"/>
         <Label Name="lblStartDate" Content="Start Date" Grid.Row="2" Grid.Column="0"/>
         <DatePicker Name="dpStartDate" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" Margin="4"/>
         <Label Name="lblEndDate" Content="End Date" Grid.Row="3" Grid.Column="0"/>

@@ -37,8 +37,7 @@
             <Label Content="EndDate" HorizontalAlignment="Left" Margin="1,295,0,0" VerticalAlignment="Top"/>
             <DatePicker x:Name="dtpStart" HorizontalAlignment="Left" Margin="66,251,0,0" VerticalAlignment="Top" Width="119"/>
             <DatePicker x:Name="dtpEnd" HorizontalAlignment="Left" Margin="64,295,0,0" VerticalAlignment="Top" Width="119"/>
-            <Button x:Name="btnClear" Content="Clear" HorizontalAlignment="Left" Margin="150,420,0,0" VerticalAlignment="Top" Click="btnClear_Click" Height="20" Width="55" />
-            <Button x:Name="btnLoad" Content="Load" HorizontalAlignment="Left" Margin="64,420,0,0" VerticalAlignment="Top"  Height="20" Width="55" Click="btnLoad_Click" />
+            <Button x:Name="btnClear" Content="Clear" HorizontalAlignment="Left" Margin="107,420,0,0" VerticalAlignment="Top" Click="btnClear_Click" Height="20" Width="55" />
             <Label Content="Search" HorizontalAlignment="Left" Margin="-1,327,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Margin="66,331,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="txtSearch_TextChanged"/>
 
