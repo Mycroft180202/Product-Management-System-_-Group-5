@@ -16,6 +16,7 @@ namespace Product_Management_System
     /// </summary>
     public partial class ProductPriceHistoryPage : Page
     {
+        private ProductManagementDbContext dbcontext = new ProductManagementDbContext();
         private readonly IPriceHistoryService _priceHistoryService;
         private readonly User _currentUser;
 
@@ -69,24 +70,32 @@ namespace Product_Management_System
         {
             try
             {
-                var newPriceHistory = new ProductPriceHistory
-                {
-                    StartDate = dpStartDate.SelectedDate.HasValue
-                                    ? dpStartDate.SelectedDate.Value : DateTime.Now,
-                    EndDate = dpEndDate.SelectedDate,
-                    Price = decimal.Parse(txtPrice.Text)
-                };
-                _priceHistoryService.InsertPriceHistory(newPriceHistory);
+                var maxProductId = dbcontext.ProductPriceHistories.Max(p => p.ProductId);
+                var newProduct = new ProductPriceHistory();
+                //newProduct.ProductId = maxProductId + 1;
+                //newProduct.Name = tbName.Text;
+                //newProduct.Color = tbColor.Text;
+                //newProduct.Cost = decimal.Parse(tbCost.Text);
+                //newProduct.Price = decimal.Parse(tbPrice.Text);
+                //newProduct.SubcategoryId = (cbCategory.SelectedItem as ProductSubcategory)?.SubcategoryId;
+                //newProduct.ModelId = (cbModel.SelectedItem as ProductModel)?.ModelId;
+                //newProduct.SellStartDate = dtpStart.SelectedDate ?? DateTime.Now;
+                //newProduct.SellEndDate = dtpEnd.SelectedDate;
+                newProduct.ProductId = maxProductId + 1;
+                newProduct.StartDate = dpStartDate.SelectedDate ?? DateTime.Now;
+                newProduct.EndDate = dpEndDate.SelectedDate;
+                newProduct.Price = decimal.Parse(txtPrice.Text);
+
+                dbcontext.ProductPriceHistories.Add(newProduct);
+                dbcontext.SaveChanges();
                 LoadProductPriceHistory();
                 ClearInputField();
+
+                MessageBox.Show("Product added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                LoadProductPriceHistory();
+                MessageBox.Show($"Failed to add product. Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
